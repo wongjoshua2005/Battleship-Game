@@ -8,7 +8,7 @@
  * Game class is where all the data about the game is currently running and
  * contains all of the user information and status of the game.
  */
-public class Game {
+public class Board {
 
     private char[][] gameBoard;
 
@@ -16,7 +16,7 @@ public class Game {
      * Game constructor is where the game board is created to start setting
      * up the game.
      */
-    public Game() {
+    public Board() {
         gameBoard = new char[10][10];
     }
 
@@ -97,7 +97,7 @@ public class Game {
         System.out.println("Welcome to Battleship!");
         System.out.println("Each person take turns firing at each other's ship. Last one standing wins!");
 
-        Game mainGame = new Game();
+        Board mainGame = new Board();
 
         mainGame.initBoard();
         mainGame.printBoard();
