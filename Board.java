@@ -3,6 +3,8 @@
  * Summer 2025
  * Game.java
  */
+import java.util.Scanner;
+
 
 /**
  * Game class is where all the data about the game is currently running and
@@ -87,6 +89,57 @@ public class Board {
         printBorder(borderSize);
     }
 
+    private int placeShips(PlayerShips player, Scanner userInput) {
+        int result = -1;
+
+        player.addShips();
+
+        int curr = 0;
+        int remainingShips = 5;
+        do {
+            System.out.print("Which row do you want to place your ship? (A-J): ");
+            char rowInput = Character.toUpperCase(userInput.next().charAt(0));
+
+            int row = rowInput - 'A';
+
+            if (row < 0 || row > gameBoard.length) {
+                System.err.println("Invalid row. Please try again.");
+            } else {
+                System.out.print("Which col do you want to place your ship? (0-9): ");
+                int col = userInput.nextInt();
+
+                if (col < 0 || col > gameBoard.length) {
+                    System.err.println("Invalid col. Please try again.");
+                } else {
+                    System.out.print("Do you want to place ship horizontal (Y) or vertical (N)? ");
+                    char horizontalInput = Character.toUpperCase(
+                        userInput.next().charAt(0)
+                    );
+
+                    boolean horizontal = false;
+
+                    if (horizontalInput == 'Y') {
+                        horizontal = true;
+                    }
+
+                    boolean status = player.placeShip(gameBoard, player.getShip(curr), 
+                    row, col, horizontal);
+
+                    if (!status) {
+                        System.out.println("Sorry, not valid area. Try again.");
+                    } else {
+                        curr++;
+                        printBoard();
+                    }
+                }
+            }
+        } while (curr < remainingShips);
+
+        result = 0;
+
+        return result;
+    }
+
     /**
      * The main() method runs the Battleship game in full and 
      * allow the user to setup their information.
@@ -101,5 +154,15 @@ public class Board {
 
         mainGame.initBoard();
         mainGame.printBoard();
+
+        Scanner scan = new Scanner(System.in);
+
+        //System.out.print("Do you want to play against a bot (1), a player (2), or just bots (3)? ");
+        //int choice = scan.nextInt();
+
+        PlayerShips player1 = new PlayerShips();
+        //PlayerShips player2 = new PlayerShips();
+
+        mainGame.placeShips(player1, scan);
     }
 }
