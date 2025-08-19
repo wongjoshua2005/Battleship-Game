@@ -18,13 +18,15 @@ public class Ship {
 
         if (horizontal) {
             for (int i = 0; i < numCells; i++) {
-                if (gameBoard[row][col + i] != '~') {
+                if (col + i >= gameBoard.length || col + i < 0 || 
+                gameBoard[row][col + i] != '~') {
                     return result;
                 }
             }
         } else {
             for (int i = 0; i < numCells; i++) {
-                if (gameBoard[row + i][col] != '~') {
+                if (row + i >= gameBoard.length || row + i < 0 ||
+                gameBoard[row + i][col] != '~') {
                     return result;
                 }
             }

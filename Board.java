@@ -63,6 +63,12 @@ public class Board {
         int borderSize = 43;
         printBorder(borderSize);
 
+        // To print the column numbers on the board
+        for (int i = 0; i < gameBoard.length; i++) {
+            System.out.print("   " + i);
+        }
+        System.out.println();
+
         // To print the main data of the board along with the letter
         for (int r = 0; r < gameBoard.length; r++) {
             // To print the letter first
