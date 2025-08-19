@@ -4,12 +4,36 @@ import java.util.HashMap;
 public class Ship {
     private String name;
     private int numCells;
-    //private HashMap<HashMap, String> cells;
+    private HashMap<Integer, Integer> cells;
 
-    public Ship(String shipName, int cells) {
+    public Ship(String shipName, int totalCells) {
         name = shipName;
-        numCells = cells;
-        //cells = new HashMap<HashMap, String>();
+        numCells = totalCells;
+        cells = new HashMap<Integer, Integer>();
+    }
+
+    public int cellsLeft() {
+        return cells.size();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean containsCoordinate(int row, int col) {
+        boolean result = false;
+
+        if (cells.containsKey(row) && cells.containsValue(col)) {
+            removeCell(row, col);
+            result = true;
+        }
+
+        return result;
+    }
+
+    private void removeCell(int row, int col) {
+        cells.remove(row, col);
+        numCells--;
     }
 
     public boolean verifyPlacement(char[][] gameBoard, int row, 
@@ -42,10 +66,12 @@ public class Ship {
         if (horizontal) {
             for (int i = 0; i < numCells; i++) {
                 gameBoard[row][col + i] = 'S';
+                cells.put(row, col + i);
             }
         } else {
             for (int i = 0; i < numCells; i++) {
                 gameBoard[row + i][col] = 'S';
+                cells.put(row + i, col);
             }
         }
     }

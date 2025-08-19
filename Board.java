@@ -162,6 +162,7 @@ public class Board {
         } else {
             player.announceHit(target);
             gameBoard[row][col] = 'X';
+            target.verifyDestroyed(row, col);
         }
 
         printBoard();
@@ -188,10 +189,14 @@ public class Board {
 
         mainGame.placeShips(player1, scan);
 
-        // mainGame.attackShip(player1, player1, 0, 0);
-        // mainGame.attackShip(player1, player1, 0, 9);
-        // mainGame.attackShip(player1, player1, 0, 0);
-        // mainGame.attackShip(player1, player1, 0, 1);
-        // mainGame.attackShip(player1, player1, 25, 25);
+        mainGame.attackShip(player1, player1, 0, 0);
+        mainGame.attackShip(player1, player1, 0, 9);
+        mainGame.attackShip(player1, player1, 0, 0);
+        mainGame.attackShip(player1, player1, 0, 1);
+        mainGame.attackShip(player1, player1, 25, 25);
+        mainGame.attackShip(player1, player1, 0, 1);
+        mainGame.attackShip(player1, player1, 0, 2);
+        mainGame.attackShip(player1, player1, 0, 3);
+        mainGame.attackShip(player1, player1, 0, 4);
     }
 }

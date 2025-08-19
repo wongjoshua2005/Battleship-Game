@@ -56,4 +56,13 @@ public class PlayerShips {
 
         return status;
     }
+
+    public void verifyDestroyed(int row, int col) {
+        for (Ship ship : allShips) {
+            if (ship.containsCoordinate(row, col) && ship.cellsLeft() == 0) {
+                System.out.println("Target's " + ship.getName() + " has been destroyed!");
+                allShips.remove(ship);
+            }
+        }
+    }
 }
