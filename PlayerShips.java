@@ -58,10 +58,12 @@ public class PlayerShips {
     }
 
     public void verifyDestroyed(int row, int col) {
-        for (Ship ship : allShips) {
-            if (ship.containsCoordinate(row, col) && ship.cellsLeft() == 0) {
-                System.out.println("Target's " + ship.getName() + " has been destroyed!");
-                allShips.remove(ship);
+        for (int i = allShips.size() - 1; i >= 0; i--) {
+            if (allShips.get(i).containsCoordinate(row, col) && 
+            allShips.get(i).cellsLeft() == 0) {
+                System.out.println("Target's " + allShips.get(i).getName() 
+                + " has been destroyed!");
+                allShips.remove(allShips.get(i));
             }
         }
     }
