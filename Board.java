@@ -146,6 +146,27 @@ public class Board {
         return result;
     }
 
+    private void attackShip(PlayerShips player, PlayerShips target, int row,
+    int col) {
+        if (row < 0 || row > gameBoard.length 
+        || col < 0 || col > gameBoard.length) {
+            System.err.println("Invalid row or col position. Try again!");
+            return;
+        }
+
+        if (gameBoard[row][col] == 'X' || gameBoard[row][col] == 'O') {
+            System.out.println("Coordinate is already attacked. Please choose another area.");
+        } else if (gameBoard[row][col] == '~') {
+            player.announceMiss();
+            gameBoard[row][col] = 'O';
+        } else {
+            player.announceHit(target);
+            gameBoard[row][col] = 'X';
+        }
+
+        printBoard();
+    }
+
     /**
      * The main() method runs the Battleship game in full and 
      * allow the user to setup their information.
@@ -163,12 +184,14 @@ public class Board {
 
         Scanner scan = new Scanner(System.in);
 
-        //System.out.print("Do you want to play against a bot (1), a player (2), or just bots (3)? ");
-        //int choice = scan.nextInt();
-
-        PlayerShips player1 = new PlayerShips();
-        //PlayerShips player2 = new PlayerShips();
+        PlayerShips player1 = new PlayerShips("Joshua");
 
         mainGame.placeShips(player1, scan);
+
+        // mainGame.attackShip(player1, player1, 0, 0);
+        // mainGame.attackShip(player1, player1, 0, 9);
+        // mainGame.attackShip(player1, player1, 0, 0);
+        // mainGame.attackShip(player1, player1, 0, 1);
+        // mainGame.attackShip(player1, player1, 25, 25);
     }
 }
