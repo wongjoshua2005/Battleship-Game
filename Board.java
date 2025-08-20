@@ -22,11 +22,15 @@ public class Board {
         gameBoard = new char[10][10];
     }
 
+    public int boardLength() {
+        return gameBoard.length;
+    }
+
     /**
      * The initBoard() method sets up the game by adding water to the board
      * so that the user can add specific ships when starting the game.
      */
-    private void initBoard() {
+    public void initBoard() {
         for (int r = 0; r < gameBoard.length; r++) {
             for (int c = 0; c < gameBoard[r].length; c++) {
                 gameBoard[r][c] = '~';
@@ -95,7 +99,7 @@ public class Board {
         printBorder(borderSize);
     }
 
-    private int placeShips(PlayerShips player, Scanner userInput) {
+    public int placeShips(PlayerShips player, Scanner userInput) {
         int result = -1;
 
         player.addShips();
@@ -146,7 +150,7 @@ public class Board {
         return result;
     }
 
-    private void attackShip(PlayerShips player, PlayerShips target, int row,
+    public void attackShip(PlayerShips player, PlayerShips target, int row,
     int col) {
         if (row < 0 || row > gameBoard.length 
         || col < 0 || col > gameBoard.length) {
@@ -166,37 +170,5 @@ public class Board {
         }
 
         printBoard();
-    }
-
-    /**
-     * The main() method runs the Battleship game in full and 
-     * allow the user to setup their information.
-     * @param args contains all the added standard input from the user 
-     * (but it's not necessary)
-     */
-    public static void main(String[] args) {
-        System.out.println("Welcome to Battleship!");
-        System.out.println("Each person take turns firing at each other's ship. Last one standing wins!");
-
-        Board mainGame = new Board();
-
-        mainGame.initBoard();
-        mainGame.printBoard();
-
-        Scanner scan = new Scanner(System.in);
-
-        PlayerShips player1 = new PlayerShips("Joshua");
-
-        mainGame.placeShips(player1, scan);
-
-        mainGame.attackShip(player1, player1, 0, 0);
-        mainGame.attackShip(player1, player1, 0, 9);
-        mainGame.attackShip(player1, player1, 0, 0);
-        mainGame.attackShip(player1, player1, 0, 1);
-        mainGame.attackShip(player1, player1, 25, 25);
-        mainGame.attackShip(player1, player1, 0, 1);
-        mainGame.attackShip(player1, player1, 0, 2);
-        mainGame.attackShip(player1, player1, 0, 3);
-        mainGame.attackShip(player1, player1, 0, 4);
     }
 }

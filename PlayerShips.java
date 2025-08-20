@@ -3,10 +3,17 @@ import java.util.ArrayList;
 public class PlayerShips {
     private String playerName;
     private ArrayList<Ship> allShips;
+    private int numOfShips;
+
 
     public PlayerShips(String name) {
         playerName = name;
         allShips = new ArrayList<Ship>();
+        numOfShips = 5;
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
     public void announceMiss() {
@@ -58,13 +65,22 @@ public class PlayerShips {
     }
 
     public void verifyDestroyed(int row, int col) {
+
         for (int i = allShips.size() - 1; i >= 0; i--) {
+
             if (allShips.get(i).containsCoordinate(row, col) && 
             allShips.get(i).cellsLeft() == 0) {
                 System.out.println("Target's " + allShips.get(i).getName() 
                 + " has been destroyed!");
                 allShips.remove(allShips.get(i));
+                numOfShips--;
             }
+
         }
+        
+    }
+
+    public int remainingShips() {
+        return numOfShips;
     }
 }
