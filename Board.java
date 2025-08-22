@@ -99,6 +99,9 @@ public class Board {
         printBorder(borderSize);
     }
 
+    /**
+     * 
+     */
     public int placeShips(PlayerShips player, Scanner userInput) {
         int result = -1;
 

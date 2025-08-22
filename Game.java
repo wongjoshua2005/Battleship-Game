@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Game {
-    private PlayerShips player1;
-    private PlayerShips player2;
+    private Player player1;
+    private Player player2;
     private Board player1Board;
     private Board player2Board;
 
@@ -10,18 +10,18 @@ public class Game {
         player1Board = new Board();
         player1Board.initBoard();
 
-        player1 = new PlayerShips(player1Name);
+        player1 = new Player(player1Name);
         player1.addShips();
 
         player2Board = new Board();
         player2Board.initBoard();
 
-        player2 = new PlayerShips(player2Name);
+        player2 = new Player(player2Name);
         player2.addShips();
     }
 
     private void makeMove(Board targetBoard, 
-    PlayerShips player, PlayerShips target, Scanner userInput) {
+    Player player, Player target, Scanner userInput) {
         System.out.println(player.getPlayerName() + "\'s move!");
         System.out.print("Enter the row to attack: ");
 

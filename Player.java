@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 
-public class PlayerShips {
+public class Player {
     private String playerName;
     private ArrayList<Ship> allShips;
     private int numOfShips;
 
-
-    public PlayerShips(String name) {
+    public Player(String name) {
         playerName = name;
         allShips = new ArrayList<Ship>();
         numOfShips = 5;
@@ -20,7 +19,7 @@ public class PlayerShips {
         System.out.println(playerName + " did not hit target.");
     }
 
-    public void announceHit(PlayerShips target) {
+    public void announceHit(Player target) {
         System.out.println(playerName + " hit " 
         + target.playerName + "'s ship.");
     }
