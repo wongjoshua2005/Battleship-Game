@@ -7,17 +7,21 @@ public class Game {
     private Board player2Board;
 
     public Game(String player1Name, String player2Name) {
-        player1Board = new Board();
-        player1Board.initBoard();
+        if (!player1Name.equals("Bot")) {
+            player1Board = new Board();
+            player1Board.initBoard();
 
-        player1 = new Player(player1Name);
-        player1.addShips();
+            player1 = new Player(player1Name);
+            player1.addShips();
+        }
 
-        player2Board = new Board();
-        player2Board.initBoard();
+        if (!player2Name.equals("Bot")) {
+            player2Board = new Board();
+            player2Board.initBoard();
 
-        player2 = new Player(player2Name);
-        player2.addShips();
+            player2 = new Player(player2Name);
+            player2.addShips();   
+        }
     }
 
     private void makeMove(Board targetBoard, 
@@ -28,13 +32,13 @@ public class Game {
         char rowInput = Character.toUpperCase(userInput.next().charAt(0));
         int row = rowInput - 'A';
 
-        if (row < 0 || row > targetBoard.boardLength()) {
+        if (row < 0 || row > targetBoard.boardRow()) {
             System.err.println("Invalid row. Please try again.");
         } else {
             System.out.print("Enter the col to attack: ");
             int col = userInput.nextInt();
 
-            if (col < 0 || col > targetBoard.boardLength()) {
+            if (col < 0 || col > targetBoard.boardRow()) {
                 System.err.println("Invalid col. Please try again.");
             } else {
                 targetBoard.attackShip(player, target, row, col);
@@ -100,6 +104,12 @@ public class Game {
             case 1:
                 break;
             case 2:
+                // System.out.print("Enter player name: ");
+                // String playerName = scan.next();
+
+
+                // mainGame = new Game(playerName, "Bot");
+
                 break;
             case 3:
                 System.out.print("Enter player 1's name: ");

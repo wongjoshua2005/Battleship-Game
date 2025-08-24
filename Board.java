@@ -22,8 +22,12 @@ public class Board {
         gameBoard = new char[10][10];
     }
 
-    public int boardLength() {
+    public int boardRow() {
         return gameBoard.length;
+    }
+
+    public int boardCol() {
+        return gameBoard[0].length;
     }
 
     /**
@@ -102,7 +106,7 @@ public class Board {
     /**
      * 
      */
-    public int placeShips(PlayerShips player, Scanner userInput) {
+    public int placeShips(Player player, Scanner userInput) {
         int result = -1;
 
         player.addShips();
