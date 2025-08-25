@@ -4,14 +4,16 @@ import java.util.Random;
 public class Bot extends Player {
     private String targetMode;
     private Board botBoard;
+    private Board targetBoard;
     private Stack<int[]> targetCells;
     private boolean[][] visited;
 
-    public Bot(String name, Board gameBoard) {
+    public Bot(String name, Board gameBoard, Board target) {
         super(name);
         botBoard = gameBoard;
         targetCells = new Stack<int[]>();
-        visited = new boolean[botBoard.boardRow()][botBoard.boardCol()];
+        targetBoard = target;
+        visited = new boolean[targetBoard.boardRow()][targetBoard.boardCol()];
         targetMode = "HUNT";
     }
 
@@ -45,8 +47,8 @@ public class Bot extends Player {
             int[] result = new int[2];
 
             do {
-                int randRow = rand.nextInt(botBoard.boardRow());
-                int randCol = rand.nextInt(botBoard.boardCol());
+                int randRow = rand.nextInt(targetBoard.boardRow());
+                int randCol = rand.nextInt(targetBoard.boardCol());
 
                 if (!visited[randRow][randCol]) {
                     result[0] = randRow;
@@ -78,10 +80,10 @@ public class Bot extends Player {
         }
     }
 
-    public void botMove(Player bot, Player target) {
+    public void botMove(Player bot, Player target, Board targetBoard) {
         int[] move = nextMove();
 
-        String result = botBoard.attackShip(bot,
+        String result = targetBoard.attackShip(bot,
          target, move[0], move[1]);
 
         moveResult(move, result);

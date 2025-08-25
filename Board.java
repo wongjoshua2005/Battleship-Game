@@ -63,7 +63,7 @@ public class Board {
      * The printBoard() method prints the ENTIRE board to update when
      * playing Battleship.
      */
-    private void printBoard() {
+    public void printBoard() {
         // To retrieve letter when printing out each row on the board
         char[] letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
@@ -175,12 +175,13 @@ public class Board {
         return result;
     }
 
-    public void attackShip(Player player, Player target, int row,
+    public String attackShip(Player player, Player target, int row,
     int col) {
+        StringBuilder result = new StringBuilder();
+
         if (row < 0 || row > gameBoard.length 
         || col < 0 || col > gameBoard.length) {
             System.err.println("Invalid row or col position. Try again!");
-            return;
         }
 
         if (gameBoard[row][col] == 'X' || gameBoard[row][col] == 'O') {
@@ -188,12 +189,21 @@ public class Board {
         } else if (gameBoard[row][col] == '~') {
             player.announceMiss();
             gameBoard[row][col] = 'O';
+            result.append("MISS");
         } else {
             player.announceHit(target);
             gameBoard[row][col] = 'X';
-            target.verifyDestroyed(row, col);
+            boolean isDestroyed = target.verifyDestroyed(row, col);
+
+            if (isDestroyed) {
+                result.append("SUNK");
+            } else {
+                result.append("HIT");
+            }
         }
 
         printBoard();
+
+        return result.toString();
     }
 }

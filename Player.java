@@ -63,7 +63,8 @@ public class Player {
         return status;
     }
 
-    public void verifyDestroyed(int row, int col) {
+    public boolean verifyDestroyed(int row, int col) {
+        boolean destroyed = false;
 
         for (int i = allShips.size() - 1; i >= 0; i--) {
 
@@ -72,11 +73,14 @@ public class Player {
                 System.out.println("Target's " + allShips.get(i).getName() 
                 + " has been destroyed!");
                 allShips.remove(allShips.get(i));
+                destroyed = true;
                 numOfShips--;
+                break;
             }
 
         }
-        
+
+        return destroyed;  
     }
 
     public int remainingShips() {
