@@ -15,6 +15,27 @@ public class Bot extends Player {
         targetMode = "HUNT";
     }
 
+    public void randomShips() {
+        Random rand = new Random();
+
+        int curr = 0;
+        int remainingShips = 5;
+        while (curr < remainingShips) {
+            int randRow = rand.nextInt(botBoard.boardRow());
+            int randCol = rand.nextInt(botBoard.boardCol());
+            boolean randRotation = rand.nextBoolean();
+
+            int result = 
+            botBoard.placeShips(this, randRow, randCol, randRotation, curr);
+
+            if (result == -1) {
+                continue;
+            } else {
+                curr++;
+            }
+        }
+    }
+
     private int[] nextMove() {
         Random rand = new Random();
 
@@ -53,13 +74,17 @@ public class Bot extends Player {
             targetMode = "TARGET";
         } else if (roundResult.equals("SUNK")) {
             targetCells.clear();
-
             targetMode = "HUNT";
         }
     }
 
-    public void botMove() {
-        
+    public void botMove(Player bot, Player target) {
+        int[] move = nextMove();
+
+        String result = botBoard.attackShip(bot,
+         target, move[0], move[1]);
+
+        moveResult(move, result);
     }
 
     

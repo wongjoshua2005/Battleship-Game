@@ -103,6 +103,24 @@ public class Board {
         printBorder(borderSize);
     }
 
+    public int placeShips(Bot bot, int row, int col, boolean horizontal,
+    int currShip) {
+        int result = -1;
+        bot.addShips();
+
+        boolean status = bot.placeShip(gameBoard, bot.getShip(currShip), 
+        row, col, horizontal);
+
+        if (!status) {
+            System.out.println("Sorry, not valid area. Try again.");
+        } else {
+            result = 0;
+            printBoard();
+        }
+
+        return result;
+    }
+
     /**
      * 
      */
@@ -157,7 +175,7 @@ public class Board {
         return result;
     }
 
-    public void attackShip(PlayerShips player, PlayerShips target, int row,
+    public void attackShip(Player player, Player target, int row,
     int col) {
         if (row < 0 || row > gameBoard.length 
         || col < 0 || col > gameBoard.length) {

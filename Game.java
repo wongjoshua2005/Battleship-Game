@@ -7,55 +7,76 @@ public class Game {
     private Board player2Board;
 
     public Game(String player1Name, String player2Name) {
-        if (!player1Name.equals("Bot")) {
-            player1Board = new Board();
-            player1Board.initBoard();
+        player1Board = new Board();
+        player1Board.initBoard();
 
-            player1 = new Player(player1Name);
-            player1.addShips();
-        }
+        player1 = new Player(player1Name);
+        player1.addShips();
+
+        player2Board = new Board();
+        player2Board.initBoard();
 
         if (!player2Name.equals("Bot")) {
-            player2Board = new Board();
-            player2Board.initBoard();
-
-            player2 = new Player(player2Name);
-            player2.addShips();   
+            player2 = new Player(player2Name); 
+        } else {
+            player2 = new Bot("Bot Player", player2Board);
         }
+
+        player2.addShips();
     }
 
     private void makeMove(Board targetBoard, 
-    Player player, Player target, Scanner userInput) {
+    Player player, Player target, Scanner userInput, boolean botTurn) {
         System.out.println(player.getPlayerName() + "\'s move!");
-        System.out.print("Enter the row to attack: ");
 
-        char rowInput = Character.toUpperCase(userInput.next().charAt(0));
-        int row = rowInput - 'A';
-
-        if (row < 0 || row > targetBoard.boardRow()) {
-            System.err.println("Invalid row. Please try again.");
+        if (botTurn) {
+            Bot bot = (Bot) player;
+            bot.botMove(player, target);
         } else {
-            System.out.print("Enter the col to attack: ");
-            int col = userInput.nextInt();
+            System.out.print("Enter the row to attack: ");
 
-            if (col < 0 || col > targetBoard.boardRow()) {
-                System.err.println("Invalid col. Please try again.");
+            char rowInput = Character.toUpperCase(userInput.next().charAt(0));
+            int row = rowInput - 'A';
+
+            if (row < 0 || row > targetBoard.boardRow()) {
+                System.err.println("Invalid row. Please try again.");
             } else {
-                targetBoard.attackShip(player, target, row, col);
+                System.out.print("Enter the col to attack: ");
+                int col = userInput.nextInt();
+
+                if (col < 0 || col > targetBoard.boardRow()) {
+                    System.err.println("Invalid col. Please try again.");
+                } else {
+                    targetBoard.attackShip(player, target, row, col);
+                }
             }
         }
     }
 
-    private void runGame(Scanner userInput) {
+    private void runGame(Scanner userInput, int mode) {
         boolean settingGame = true;
         boolean running = false;
 
         do {
-            System.out.println("Player 1, please place your ships down.");
-            player1Board.placeShips(player1, userInput);
+            switch (mode) {
+                case 1:
+                    break;
+                case 2:
+                    System.out.println("Player, please place your ships down.");
+                    player1Board.placeShips(player1, userInput);
 
-            System.out.println("Player 2, please place your ships down.");
-            player2Board.placeShips(player2, userInput);
+
+                    Bot botPlayer = (Bot) player2;
+                    botPlayer.randomShips();
+                    break;
+                case 3:
+                    System.out.println("Player 1, please place your ships down.");
+                    player1Board.placeShips(player1, userInput);
+
+                    System.out.println("Player 2, please place your ships down.");
+                    player2Board.placeShips(player2, userInput);
+                    break;
+            }
 
             settingGame = false;
         } while (settingGame);
@@ -70,9 +91,20 @@ public class Game {
                 " win!");
                 running = false;
             } else {
-                //System.out.println("Player 1 remaining ships: " + player1.remainingShips());
-
-                makeMove(player2Board, player1, player2, userInput);
+                switch (mode) {
+                    case 1:
+                        makeMove(player2Board, player1, player2, 
+                        userInput, true);
+                        break;
+                    case 2:
+                        makeMove(player2Board, player1, player2, 
+                        userInput, true);
+                        break;
+                    case 3:
+                        makeMove(player2Board, player1, player2, 
+                        userInput, false);
+                        break;
+                }
             }
 
             if (player2.remainingShips() == 0 && player1.remainingShips() != 0) {
@@ -80,9 +112,20 @@ public class Game {
                 " win!");
                 running = false;
             } else {
-                //System.out.println("Player 2 remaining ships: " + player2.remainingShips());
-
-                makeMove(player1Board, player2, player1, userInput);
+                switch (mode) {
+                    case 1:
+                        makeMove(player1Board, player2, player1, 
+                        userInput, true);
+                        break;
+                    case 2:
+                        makeMove(player1Board, player2, player1, 
+                        userInput, true);
+                        break;
+                    case 3:
+                        makeMove(player1Board, player2, player1, 
+                        userInput, false);
+                        break;
+                }
             }
         }
     }
@@ -104,11 +147,11 @@ public class Game {
             case 1:
                 break;
             case 2:
-                // System.out.print("Enter player name: ");
-                // String playerName = scan.next();
+                System.out.print("Enter player name: ");
+                String playerName = scan.next();
 
 
-                // mainGame = new Game(playerName, "Bot");
+                mainGame = new Game(playerName, "Bot");
 
                 break;
             case 3:
@@ -126,6 +169,6 @@ public class Game {
                 break;
         }
 
-        mainGame.runGame(scan);
+        mainGame.runGame(scan, mode);
     }
 }
