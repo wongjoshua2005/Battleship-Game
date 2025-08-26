@@ -179,9 +179,10 @@ public class Board {
     int col) {
         StringBuilder result = new StringBuilder();
 
-        if (row < 0 || row > gameBoard.length 
-        || col < 0 || col > gameBoard.length) {
+        if (row < 0 || row >= boardRow() 
+        || col < 0 || col >= boardCol()) {
             System.err.println("Invalid row or col position. Try again!");
+            return "REDO";
         }
 
         if (gameBoard[row][col] == 'X' || gameBoard[row][col] == 'O') {

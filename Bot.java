@@ -23,8 +23,8 @@ public class Bot extends Player {
         int curr = 0;
         int remainingShips = 5;
         while (curr < remainingShips) {
-            int randRow = rand.nextInt(botBoard.boardRow());
-            int randCol = rand.nextInt(botBoard.boardCol());
+            int randRow = rand.nextInt(targetBoard.boardRow());
+            int randCol = rand.nextInt(targetBoard.boardCol());
             boolean randRotation = rand.nextBoolean();
 
             int result = 
@@ -41,7 +41,7 @@ public class Bot extends Player {
     private int[] nextMove() {
         Random rand = new Random();
 
-        if (targetMode.equals("HUNT")) {
+        if (targetMode.equals("HUNT") || targetCells.isEmpty()) {
             // Pick random cell
             boolean searchCoordinates = true;
             int[] result = new int[2];
@@ -51,11 +51,11 @@ public class Bot extends Player {
                 int randCol = rand.nextInt(targetBoard.boardCol());
 
                 if (!visited[randRow][randCol]) {
+                    visited[randRow][randCol] = true;
                     result[0] = randRow;
                     result[1] = randCol;
-                    targetCells.push(result);
 
-                    visited[randRow][randCol] = true;
+                    targetCells.push(result);
                     searchCoordinates = false;
                 }
             } while (searchCoordinates);

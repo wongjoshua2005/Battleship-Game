@@ -12,11 +12,11 @@ public class Game {
         player1Board = new Board();
         player1Board.initBoard();
 
-        bot1 = new Bot("Bot1", player1Board, player2Board);
-        bot1.addShips();
-
         player2Board = new Board();
         player2Board.initBoard();
+
+        bot1 = new Bot("Bot1", player1Board, player2Board);
+        bot1.addShips();
 
         bot2 = new Bot("Bot2", player2Board, player1Board);
         bot2.addShips();  
@@ -88,6 +88,8 @@ public class Game {
         do {
             switch (mode) {
                 case 1:
+                    bot1.randomShips();
+                    bot2.randomShips();
                     break;
                 case 2:
                     System.out.println("Player, please place your ships down.");
@@ -114,12 +116,29 @@ public class Game {
         while (running) {
             switch (mode) {
                 case 1:
+                    if (bot1.remainingShips() == 0 && 
+                    bot2.remainingShips() != 0) {
+                        System.out.println("Game over! Bot 2 wins!");
+                        break;
+                    } else if (bot2.remainingShips() == 0 
+                    && bot1.remainingShips() != 0) {
+                        System.out.println("Game over! Bot 1 wins!!!");
+                        running = false;
+                        break;
+                    } else {
+                        makeMove(player2Board, (Player) bot1, (Player) bot2,
+                        userInput, true);
+
+                        makeMove(player1Board, (Player) bot2, (Player) bot1, 
+                        userInput, true);
+                    }
+
                     break;
                 case 2:
                     if (player1.remainingShips() == 0 
                     && bot2.remainingShips() != 0) {
                         System.out.println("Game over! The bot wins!");
-                        running = false;             
+                        break;            
                     } else {
                         makeMove(player2Board, player1, (Player) bot2, 
                         userInput, false);
@@ -128,7 +147,7 @@ public class Game {
                     if (bot2.remainingShips() == 0 
                     && player1.remainingShips() != 0) {
                         System.out.println("Game over! " + player1.getPlayerName() + " win!");
-                        running = false;
+                        break;
                     } else {
                         makeMove(player1Board, (Player) bot2, player1, 
                         userInput, true);
@@ -139,7 +158,7 @@ public class Game {
                     && player2.remainingShips() != 0) {
                         System.out.println("Game over! " + player2.getPlayerName() + 
                         " win!");
-                        running = false;             
+                        break;
                     } else {
                         makeMove(player2Board, player1, player2, 
                         userInput, false);
@@ -148,7 +167,7 @@ public class Game {
                     if (player2.remainingShips() == 0 
                     && player1.remainingShips() != 0) {
                         System.out.println("Game over! " + player1.getPlayerName() + " win!");
-                        running = false;
+                        break;
                     } else {
                         makeMove(player1Board, player2, player1, 
                         userInput, false);
@@ -173,6 +192,7 @@ public class Game {
 
         switch (mode) {
             case 1:
+                mainGame = new Game();
                 break;
             case 2:
                 System.out.print("Enter player name: ");
